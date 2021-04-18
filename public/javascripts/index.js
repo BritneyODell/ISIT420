@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var tDetail = document.getElementById("detail").value;
         var tPriority = document.getElementById("priority").value;
         var oneToDo = new ToDo(tTitle, tDetail, tPriority);
-
+        
         $.ajax({
             url: '/NewToDo' ,
             method: 'POST',
@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
 
         });
+
+        var audio = new Audio("sounds/crunch1.m4a");
+        audio.play();
+        updateList();
     });
 
     document.getElementById("get").addEventListener("click", function () {

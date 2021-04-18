@@ -10,7 +10,7 @@ const Chips = require("../Chips");
 // edited to include my non-admin, user level account and PW on mongo atlas
 // and also to include the name of the mongo DB that the collection
 const dbURI =
-  "mongodb+srv://User1:Zob4OTOrBx0TeVet@britneycluster.cjekd.mongodb.net/ChipDB?retryWrites=true&w=majority";
+  "Enter connection string here";
 
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
 // by default, you need to set it to false.

@@ -10,7 +10,7 @@ const Chips = require("../Chips");
 // edited to include my non-admin, user level account and PW on mongo atlas
 // and also to include the name of the mongo DB that the collection
 const dbURI =
-"mongodb+srv://User1:Zob4OTOrBx0TeVet@britneycluster.cjekd.mongodb.net/ChipDB?retryWrites=true&w=majority";;
+  "mongodb+srv://User1:Zob4OTOrBx0TeVet@britneycluster.cjekd.mongodb.net/ChipDB?retryWrites=true&w=majority";
 
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
 // by default, you need to set it to false.
@@ -31,7 +31,7 @@ mongoose.connect(dbURI, options).then(
 );
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   res.sendFile('index.html');
 });
 
@@ -48,23 +48,23 @@ router.get('/Chips', function (req, res) {
 });
 
 /* post a new Chip and push to Mongo */
-router.post('/NewChip', function(req, res) {
+router.post('/NewChip', function (req, res) {
 
-    let oneNewChip = new Chips(req.body);  // call constuctor in Chips code that makes a new mongo chip object
-    console.log(req.body);
-    oneNewChip.save((err,chip) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      else {
+  let oneNewChip = new Chips(req.body);  // call constuctor in Chips code that makes a new mongo chip object
+  console.log(req.body);
+  oneNewChip.save((err, chip) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    else {
       console.log(chip);
       res.status(201).json(chip);
-      }
-    });
+    }
+  });
 });
 
 router.delete('/DeleteChip/:id', function (req, res) {
-  Chips.deleteOne({ _id: req.params.id }, (err, note) => { 
+  Chips.deleteOne({ _id: req.params.id }, (err, note) => {
     if (err) {
       res.status(404).send(err);
     }

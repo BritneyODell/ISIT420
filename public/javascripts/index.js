@@ -141,7 +141,7 @@ function updateList() {
             var li = document.createElement('li');
             ul.appendChild(li);
 
-            li.innerHTML = li.innerHTML + index + ": " + " Name: " + item.name + "  " + " Brand: " + item.brand + "  " +  " Flavor:  " + item.flavor + " <b>Eaten?</b> " + item.eaten;
+            li.innerHTML = li.innerHTML + index + ": " + " <b>Name:</b> " + item.name +  " <b>Flavor:</b>  " + item.flavor + " <b>Brand:</b> " + item.brand + " <b>Eaten?</b> " + item.eaten;
         }
     });
 }

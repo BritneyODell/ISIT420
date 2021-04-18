@@ -5,12 +5,12 @@ var router = express.Router();
 // .ADO.Net is a wrapper over raw SQL server interface
 const mongoose = require("mongoose");
 
-const ToDos = require("../ToDos");
+const Chips = require("../Chips");
 
 // edited to include my non-admin, user level account and PW on mongo atlas
 // and also to include the name of the mongo DB that the collection
 const dbURI =
- "your mongo connection string here";
+"mongodb+srv://User1:Zob4OTOrBx0TeVet@britneycluster.cjekd.mongodb.net/ChipDB?retryWrites=true&w=majority";;
 
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
 // by default, you need to set it to false.
@@ -30,78 +30,70 @@ mongoose.connect(dbURI, options).then(
   }
 );
 
-
-
 /* GET home page. */
 router.get('/', function(req, res) {
   res.sendFile('index.html');
 });
 
-/* GET all ToDos */
-router.get('/ToDos', function(req, res) {
+/* GET all Chips */
+router.get('/Chips', function (req, res) {
   // find {  takes values, but leaving it blank gets all}
-  ToDos.find({}, (err, AllToDos) => {
+  Chips.find({}, (err, AllChips) => {
     if (err) {
       console.log(err);
       res.status(500).send(err);
     }
-    res.status(200).json(AllToDos);
+    res.status(200).json(AllChips);
   });
 });
 
+/* post a new Chip and push to Mongo */
+router.post('/NewChip', function(req, res) {
 
-
-
-/* post a new ToDo and push to Mongo */
-router.post('/NewToDo', function(req, res) {
-
-    let oneNewToDo = new ToDos(req.body);  // call constuctor in ToDos code that makes a new mongo ToDo object
+    let oneNewChip = new Chips(req.body);  // call constuctor in Chips code that makes a new mongo chip object
     console.log(req.body);
-    oneNewToDo.save((err, todo) => {
+    oneNewChip.save((err,chip) => {
       if (err) {
         res.status(500).send(err);
       }
       else {
-      console.log(todo);
-      res.status(201).json(todo);
+      console.log(chip);
+      res.status(201).json(chip);
       }
     });
 });
 
-
-router.delete('/DeleteToDo/:id', function (req, res) {
-  ToDos.deleteOne({ _id: req.params.id }, (err, note) => { 
+router.delete('/DeleteChip/:id', function (req, res) {
+  Chips.deleteOne({ _id: req.params.id }, (err, note) => { 
     if (err) {
       res.status(404).send(err);
     }
-    res.status(200).json({ message: "ToDo successfully deleted" });
+    res.status(200).json({ message: "Chip successfully deleted" });
   });
 });
 
-
-router.put('/UpdateToDo/:id', function (req, res) {
-  ToDos.findOneAndUpdate(
+router.put('/UpdateChip/:id', function (req, res) {
+  Chips.findOneAndUpdate(
     { _id: req.params.id },
-    { title: req.body.title, detail: req.body.detail, priority: req.body.priority,   completed: req.body.completed },
-   { new: true },
-    (err, todo) => {
+    { name: req.body.name, flavor: req.body.flavor, brand: req.body.brand, eaten: req.body.eaten },
+    { new: true },
+    (err, chip) => {
       if (err) {
         res.status(500).send(err);
-    }
-    res.status(200).json(todo);
+      }
+      res.status(200).json(chip);
     })
-  });
+})
 
-
-  /* GET one ToDos */
-router.get('/FindToDo/:id', function(req, res) {
-  console.log(req.params.id );
-  ToDos.find({ _id: req.params.id }, (err, oneToDo) => {
+/* GET one Chip */
+router.get('/FindChip/:id', function (req, res) {
+  console.log(req.params.id);
+  Chips.find({ _id: req.params.id }, (err, oneChip) => {
     if (err) {
       console.log(err);
       res.status(500).send(err);
     }
-    res.status(200).json(oneToDo);
+    res.status(200).json(oneChip);
   });
 });
 
